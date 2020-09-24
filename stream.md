@@ -1,13 +1,13 @@
-##DataStream
+## DataStream
 DataStream是Fink数据流的核心抽象，其上定义了对数据流的一系列操作，同时也定义列了与其他类型DataStream的相互转换关系。每个DataStream都有一个Transformation对象，表示该DataStream从上游的DataStream使用该Transformation而来。
 
-##DataStreamSource
+## DataStreamSource
 DataStreamSource是DataStream的起点，DataStreamSource在StreamExecutionEnvironment中创建，由StreamExecutionEnvironment.addSource（SourceFunction）创建而来，其中SourceFunction中包含了DataStreamSource从数据源读取数据的具体逻辑。
 
-##DataStreamSink
+## DataStreamSink
 数据从DataSourceStream中读取，经过中间的一系列处理操作，最终需要写出到外部存储，通过DataStream.addSink（sinkFunction）创建而来，其中SinkFunction定义了写出数据到外部存储的具体逻辑。
 
-##KeyedStream
+## KeyedStream
 KeyedStream用来表述指定key进行分组的数据流。一个KeyedStream可以通过调用DataStream.keyBy() 来获得。而在KeyedStream上进行任何Transformation都将转变回DataStream。在实现中，KeyedStream把Key的信息写入了Transformation中。每条记录只能访问所属key的状态，其上的聚合函数可以方便地操作和保存对应key的状态。
 
 

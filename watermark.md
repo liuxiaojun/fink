@@ -13,4 +13,3 @@
 * 窗口出发条件： Current Watermark > Window EventTime
 * Watermark 告诉窗口不会有更晚的数据来
 * idel Watermark仅会发生在顺序事件中
-* 

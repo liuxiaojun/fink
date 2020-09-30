@@ -1,2 +1,5 @@
+Periodic Watermarks:
+* based on Event Time
 
-test
+Punctuated Watermarks:
+* based on something in the event stream

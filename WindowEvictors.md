@@ -1,1 +1,3 @@
+Window Evictors中文名称叫数据剔除器，是一个可选的组件。主要作用就是将Window里面的一些数据进行剔除操作。保证输入数据的有效性。
 
+可以应用在ProcessingFunction的前后。

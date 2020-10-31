@@ -1,1 +1,7 @@
 触发器决定何时启动Window Function处理窗口中的数据以及何时将窗口内的数据清理。
+
+
+* 通常情况下WindowAssigner中已经默认包含相应的Window Trigger， 并且适用于大部分场景
+* 所有基于Event Time时间的 WindowAssigner默认Trigger都是EventTimeTrigger
+* GlobalWindow默认为NeverTrigger，也就是不触发吗，因此使用GlobalWindow必须指定ClustomTrigger， 否则窗口永远不会触发
+* 通过WindowStream 提供的trigger()方法能够接受新的Trigger实现，但是会覆盖WindowAssigner自带的默认Trigger

@@ -19,7 +19,13 @@ Flink 解决反压的方案就是这种感觉。
 在 Flink 中，这些分布式阻塞队列就是这些逻辑流，而队列容量是通过缓冲池（LocalBufferPool）来实现的。每个被生产和被消费的流都会被分配一个缓冲池。缓冲池管理着一组缓冲(Buffer)，缓冲在被消费后可以被回收循环利用。
 这很好理解：你从池子中拿走一个缓冲，填上数据，在数据消费完之后，又把缓冲还给池子，之后你可以再次使用它。
 
-##网络传输中的内存管理
-如下图所示展示了 Flink 在网络传输场景下的内存管理。网络上传输的数据会写到 Task 的 InputGate（IG） 中，经过 Task 的处理后，再由 Task 写到 ResultPartition（RS） 中。每个 Task 都包括了输入和输入，输入和输出的数据存在 Buffer 中（都是字节数据）。
-Buffer 是 MemorySegment 的包装类。
+## 反压的过程
+* 记录“A”进入了 Flink 并且被 Task 1 处理。（这里省略了 Netty 接收、反序列化等过程）
+* 记录被序列化到 buffer 中。
+* 该 buffer 被发送到 Task 2，然后 Task 2 从这个 buffer 中读出记录。
+
+Task 1 在输出端有一个相关联的 LocalBufferPool（称缓冲池1），Task 2 在输入端也有一个相关联的 LocalBufferPool（称缓冲池2）。如果缓冲池1中有空闲可用的 buffer 来序列化记录 “A”，我们就序列化并发送该 buffer。
+
+**记录能被 Flink 处理的前提是，必须有空闲可用的 Buffer。**
+
 
